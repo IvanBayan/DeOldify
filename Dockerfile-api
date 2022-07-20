@@ -1,0 +1,20 @@
+From nvcr.io/nvidia/pytorch:22.05-py3
+
+RUN DEBIAN_FRONTEND=noninteractive && \
+    apt-get update &&  \
+    apt-get install -y python3-pip software-properties-common wget ffmpeg && \
+    mkdir -p /root/.torch/models /data/models && \
+    pip install -r requirements.txt && \
+    pip install  Flask && \
+    pip install Pillow && \
+    pip install scikit-image && \
+    pip install requests    
+
+ADD . /data/
+WORKDIR /data
+
+EXPOSE 5000
+ENTRYPOINT ["python3"]
+
+CMD ["app.py"]
+
